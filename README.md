@@ -16,19 +16,7 @@ Hardware – PCs, Cyclone II , USB flasher
 
 **Theory**
 
-Boolean Function Minimization is the process of reducing a Boolean expression to its simplest form without changing its functionality. This minimization reduces the number of gates and inputs required, optimizing circuit design.
-
-Logic Gates: Fundamental building blocks like AND, OR, and NOT gates are used to implement Boolean expressions. Karnaugh Map (K-map): A graphical technique for minimizing Boolean expressions by grouping terms based on commonalities. The given Boolean functions can be minimized as follows:
-
-F1 = A’B’C’D’ + AC’D’ + B’CD’ + A’BCD + BC’D The terms can be simplified using K-map techniques to reduce the complexity of the circuit. F2 = xy’z + x’y’z + w’xy + wx’y + wxy Similar simplification can be done for this function to reduce the gate count. The resulting minimized expressions are implemented using Verilog HDL and simulated on the Quartus Prime tool. The outputs can then be verified on an FPGA board (e.g., Cyclone II).
-
 **Logic Diagram**
-
-![image](https://github.com/user-attachments/assets/b676919e-b80a-4acd-8f91-95b68e434cf1)
-
-![image](https://github.com/user-attachments/assets/25b2145a-34ad-46d8-b0b0-fa17fff7f919)
-
-
 
 **Procedure**
 
@@ -44,34 +32,22 @@ F1 = A’B’C’D’ + AC’D’ + B’CD’ + A’BCD + BC’D The terms can b
 
 
 **Program:**
+
+**2A**
 ~~~
-/* Program to implement the given logic function and to verify its operations in quartus using Verilog programming. 
+module ex2a(a,b,c,d,f1);
+input a,b,c,d;
+output f1;
+assign f1=((~a&b&d)|(~b&~d)|(a&b&~c));
+endmodule
+~~~
 
-//Program to compute the function f1=a'b'c'd'+ac'd'+b'cd'+a'bcd+bc'd
-//f2=xy'z+x'y'z+w'xy+wx'y+wxy
-// simplify the logic using Boolean minimization/k map 
-//compute f2 and write verilog code for f2 as like f1
-
-module EX_02(a,b,c,d,w,x,y,z,f1,f2);
-input a,b,c,d,w,x,y,z;
-output f1,f2;
-wire adash,bdash,cdash,ddash,ydash,p,q,r,s,t,u;
-not(adash,a);
-not(bdash,b);
-not(cdash,c);
-not(ddash,d);
-not(ydash,y);
-and(p,bdash,ddash);
-and(q,adash,b,d);
-and(r,a,b,cdash);
-or(f1,p,q,r);
-
-wire ybar,M,N,O;
-not(ybar,y);
-and(M,w,y);
-and(N,x,y);
-and(O,z,ybar);
-or(f2,M,N,O);
+**2B**
+~~~
+module ex2b(w,x,y,z,f2);
+input w,x,y,z;
+output f2;
+assign f2=((~y&z)|(x&y)|(w&y));
 endmodule
 ~~~
 
@@ -81,21 +57,38 @@ RegisterNumber: 212224050026
 
 **RTL realization**
 
-![image](https://github.com/user-attachments/assets/b52de6c8-39d3-4c08-a835-7137ef2d0283)
+**2A**
+
+![image](https://github.com/user-attachments/assets/83b4f25f-1657-4928-aad4-877cf9665a06)
+
+
+**2B**
+
+![image](https://github.com/user-attachments/assets/a314a609-5248-4894-a792-52f8a66acb3b)
 
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/683cbc7e-89c5-43d4-973b-dbca1d7e1e0f)
+**2A**
+
+![image](https://github.com/user-attachments/assets/4627ec07-4607-4bd9-994e-521e97a47a96)
+
+
+**2B**
+
+![image](https://github.com/user-attachments/assets/84584f87-68b1-47a5-a7a9-5f1dd7fbf29a)
 
 **RTL**
 
-**Timing Diagram**
+**2A**
 
-![image](https://github.com/user-attachments/assets/a65673f7-a62c-4e5c-8df9-4120e6e2a281)
+![image](https://github.com/user-attachments/assets/27786186-9c58-44fb-a987-eb7a0939ab27)
+
+**2B**
+
+![image](https://github.com/user-attachments/assets/02525fd9-03f1-4334-86f5-585abfbf6c06)
 
 
 **Result:**
 
 Thus the given logic functions are implemented using and their operations are verified using Verilog programming.
-
